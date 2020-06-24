@@ -45,12 +45,16 @@ polls <- read_csv(poll_file,
 polls$start_date <- as.Date(polls$start_date, "%m/%d/%y")
 polls$end_date <- as.Date(polls$end_date, "%m/%d/%y")
 polls$fte_grade <- as.factor(polls$fte_grade)
-polls$state <- as.factor(polls$state)
+# polls$state <- as.factor(polls$state)
 polls$methodology <- as.factor(polls$methodology)
 polls$population <- as.factor(polls$population)
 polls$population_full <- as.factor(polls$population_full)
 polls$stage <- as.factor(polls$stage)
 polls$candidate_party <- as.factor(polls$candidate_party)
+
+polls <- polls %>%
+    mutate(mid_date = end_date - (1 + as.numeric(end_date - start_date)) %/% 2,
+           state = as.factor(replace_na(state, "Nationwide")))
 
 #####
 
@@ -70,13 +74,13 @@ polls$candidate_party <- as.factor(polls$candidate_party)
 #####
 
 polls_apr <- polls %>%
-    filter(end_date >= "2020-04-01",
+    filter(mid_date >= "2020-04-01",
            candidate_name %in% c("Joseph R. Biden Jr.", "Donald Trump"))
 
 # make this nicer
 # polls %>%
 # filter(pct > 5 & count > 100 & end_date > "2019-10-01") %>%
-ggplot(polls_apr, aes(end_date, pct)) +
+ggplot(polls_apr, aes(mid_date, pct)) +
     geom_step(aes(color = candidate_name)) +
     # geom_smooth(aes(color = candidate_name), se = FALSE) +
     geom_point(aes(color = candidate_name), size = 1) +
@@ -86,16 +90,19 @@ ggplot(polls_apr, aes(end_date, pct)) +
     theme(panel.background = element_rect(fill = "aliceblue"))
 # scale_color_viridis_d()
 
+cands <- c("Biden" = "navyblue", "Trump" = "firebrick4")
+
 poll_step = function(data) {
     # scalelen <- length(unique(polls_sig$candidate_name))
     # timepal <- hue_pal(direction = -1)(scalelen)
     # names(timepal) <- unique(polls_sig$answer[order(polls_sig$answer)])
     # names(timepal) <- levels(reorder(stringr::str_wrap(polls_sig$candidate_name, 10), seasondat$season_outcome))
     
-    ggplot(data, aes(end_date, pct)) +
+    ggplot(data, aes(mid_date, pct)) +
         geom_step(aes(color = answer)) +
-        geom_point(aes(color = answer, text = sprintf("Candidate: %s <br>Percentage: %.2f", candidate_name, pct)), size = 1) +
-        # scale_color_manual(values = timepal) +
+        geom_point(aes(color = answer, 
+                       text = sprintf("Candidate: %s <br>Percentage: %.2f <br>Region: %s", candidate_name, pct, state)), size = 1) +
+        scale_color_manual(values = cands) +
         scale_x_date(date_labels = "%b \n%d", date_breaks = "1 week") +
         labs(x = "Date", y = "Percentage of support", color = "Candidate") +
         theme_light() +
@@ -108,10 +115,11 @@ poll_smooth = function(data) {
     # names(timepal) <- unique(polls_sig$answer[order(polls_sig$answer)])
     # names(timepal) <- levels(reorder(stringr::str_wrap(polls_sig$candidate_name, 10), seasondat$season_outcome))
     
-    ggplot(data, aes(end_date, pct)) +
+    ggplot(data, aes(mid_date, pct)) +
         geom_smooth(aes(color = answer), se = FALSE) +
-        geom_point(aes(color = answer, text = sprintf("Candidate: %s <br>Percentage: %.2f", candidate_name, pct)), size = 1) +
-        # scale_color_manual(values = timepal) +
+        geom_point(aes(color = answer, 
+                       text = sprintf("Candidate: %s <br>Percentage: %.2f <br>Region: %s", candidate_name, pct, state)), size = 1) +
+        scale_color_manual(values = cands) +
         scale_x_date(date_labels = "%b \n%d", date_breaks = "1 week") +
         labs(x = "Date", y = "Percentage of support", color = "Candidate") +
         theme_light() +
@@ -119,7 +127,7 @@ poll_smooth = function(data) {
 }
 
 blank = function(data) {
-    ggplot(data, aes(end_date, pct)) +
+    ggplot(data, aes(mid_date, pct)) +
         geom_blank() +
         labs(x = "Date", y = "Percentage of support", color = "Candidate") +
         # scale_x_date(date_labels = "%b \n%d", breaks = seq(from = start, to = end, by = "week")) +
