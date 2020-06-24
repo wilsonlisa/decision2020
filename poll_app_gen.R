@@ -45,7 +45,6 @@ polls <- read_csv(poll_file,
 polls$start_date <- as.Date(polls$start_date, "%m/%d/%y")
 polls$end_date <- as.Date(polls$end_date, "%m/%d/%y")
 polls$fte_grade <- as.factor(polls$fte_grade)
-# polls$state <- as.factor(polls$state)
 polls$methodology <- as.factor(polls$methodology)
 polls$population <- as.factor(polls$population)
 polls$population_full <- as.factor(polls$population_full)
