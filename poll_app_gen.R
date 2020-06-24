@@ -110,11 +110,6 @@ poll_step = function(data) {
 }
 
 poll_smooth = function(data) {
-    # scalelen <- length(unique(polls_sig$candidate_name))
-    # timepal <- hue_pal(direction = -1)(scalelen)
-    # names(timepal) <- unique(polls_sig$answer[order(polls_sig$answer)])
-    # names(timepal) <- levels(reorder(stringr::str_wrap(polls_sig$candidate_name, 10), seasondat$season_outcome))
-    
     ggplot(data, aes(mid_date, pct)) +
         geom_smooth(aes(color = answer), se = FALSE) +
         geom_point(aes(color = answer, 
