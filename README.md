@@ -1,5 +1,5 @@
 # decision2020
-Forecasting 2020 U.S. Presidential election results using the smoothing mixed effects model and spline extrapolation method proposed in Wright 2018. An extension of my final Master of Science in Statistics project that used data from primary elections (see primary-sme-masters under wilsonlisa/course-projects).
+Forecasting 2020 U.S. Presidential election results using the smoothing mixed effects model and spline extrapolation method proposed in Wright 2018. An extension of my final Master of Science in Statistics project that used data from primary elections (see primary-sme-masters under [wilsonlisa/course-projects](https://github.com/wilsonlisa/course-projects)).
 
 [Shiny app: forecasts and poll tracker](https://lisa-wilson.shinyapps.io/decision2020/)
 
