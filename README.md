@@ -1,7 +1,7 @@
 # decision2020
-Forecasting 2020 U.S. Presidential election results using the smoothing mixed effects model and spline extrapolation method proposed in Wright 2018
+Forecasting 2020 U.S. Presidential election results using the smoothing mixed effects model and spline extrapolation method proposed in Wright 2018.
 
-[2020 Electoral College forecasts and poll tracker Shiny app](https://lisa-wilson.shinyapps.io/decision2020/)
+[Shiny app: forecasts and poll tracker](https://lisa-wilson.shinyapps.io/decision2020/)
 
 - Correctly predicted the winner in 47 of 51 states + DC
 - Miscalled AZ, FL, and GA (but predicted a difference of less than 1 percentage point in FL)
