@@ -353,8 +353,6 @@ for (i in 1:length(state_gen)){
 
 theta_0_cur_lb
 theta_0_cur_ub
-# lol, both same as point estimates
-# ugh! what's wrong
 
 ## Lil plot --> update
 theta_cur_gen_df <- data.frame(est = theta_0_1103, 
