@@ -7,4 +7,6 @@ Forecasting 2020 U.S. Presidential election results using the smoothing mixed ef
 - Miscalled AZ, FL, and GA (but predicted a difference of less than 1 percentage point in FL)
 - Predicted the difference between Biden and Trump percentages of votes within 1 point in PA, WI, and WY
 
+generalsme.R contains bulk of the code.
+
 Wright, F.A., Wright, A.A., 2018. "How surprising was Trump's victory? Evaluations of the 2016 U.S. presidential election and a new poll aggregation model." _Electoral Studies._ 54, 81-89.
