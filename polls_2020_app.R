@@ -17,8 +17,6 @@ url <- "https://projects.fivethirtyeight.com/polls-page/"
 poll_file <- "president_polls.csv"
 download.file(paste0(url, poll_file), poll_file, 
               mode = "wb")
-# download.file(paste0(url, poll_file), paste(poll_file, Sys.Date(), sep="_"),
-# mode = "wb")
 
 polls <- read_csv(poll_file,
                   col_types = cols(.default = col_character(), 
@@ -102,12 +100,7 @@ polls_re <- polls_re %>%
 
 cands <- c("Biden" = "navyblue", "Trump" = "firebrick4")
 
-poll_line = function(data) {
-    # scalelen <- length(unique(polls_sig$candidate_name))
-    # timepal <- hue_pal(direction = -1)(scalelen)
-    # names(timepal) <- unique(polls_sig$answer[order(polls_sig$answer)])
-    # names(timepal) <- levels(reorder(stringr::str_wrap(polls_sig$candidate_name, 10), seasondat$season_outcome))
-    
+poll_line = function(data) {    
     ggplot(data, aes(mid_date, pct)) +
         geom_line(aes(color = answer)) +
         geom_point(aes(color = answer, 
@@ -135,7 +128,6 @@ blank = function(data) {
     ggplot(data, aes(mid_date, pct)) +
         geom_blank() +
         labs(x = "Date", y = "Percentage of support", color = "Candidate") +
-        # scale_x_date(date_labels = "%b \n%d", breaks = seq(from = start, to = end, by = "week")) +
         theme_light() +
         theme(legend.position = "none", panel.background = element_rect(fill = "aliceblue"))
 }
@@ -185,30 +177,13 @@ plot_spread = function(data){
 shinyApp(
     ui = navbarPage("Decision 2020: General Election", theme = shinytheme("flatly"),
                     tabPanel("PollTracker",
-                             #sidebarLayout(
-                                 #sidebarPanel(
-                                     #h3("This tab has a sidebar")
-                                 #),
-                                 #mainPanel(
-                                     #h2("Victim tab")
-                                 #)
-                             #)
                              sidebarLayout(
                                  sidebarPanel(
-                                     # p(em("What happens on the show is only half the story.")),
-                                     
-                                     # p(strong("Which queens most successfully translated a reality television run into an expanded online fanbase? Explore this and more below!")),
-                                     
-                                     # br(),
                                      
                                      helpText("Hover over points for more information, such as candidate name and percentage."),
                                      
                                      br(),
-                                     
-                                     # helpText("Data available for seasons 4-10 only. If a contestant is not listed in the dropdown menus, they did not have Twitter data available during their season."),
-                                     
-                                     # br(),
-                                     
+                                                                          
                                      dateInput(inputId = "start", label = "Select a start date",
                                                value = "2020-04-01"),
                                      
@@ -234,9 +209,7 @@ shinyApp(
                                                   choices=c("Smoothing curve" = "smooth",
                                                             "Line plot" = "line"),
                                                   selected = "smooth"),
-                                     
-                                     # br(),
-                                     
+                                                                        
                                      br(),
                                      
                                      helpText("Source: FiveThirtyEight")
@@ -307,5 +280,5 @@ shinyApp(
 )
 
 # Run app
-# shinyApp(ui, server)
+shinyApp(ui, server)
 
